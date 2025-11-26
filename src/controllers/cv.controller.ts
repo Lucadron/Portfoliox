@@ -15,7 +15,7 @@ export const getCv = async (req: Request, res: Response) => {
     await incrementCvDownloads();
 
     // Kullanıcıyı PDF'e yönlendir
-    return res.redirect(cv.cvUrl); // cvUrl = "http://localhost:8008/uploads/Emre Gulsen CV.pdf"
+    return res.redirect(cv.cvUrl); // cvUrl = "http://localhost:8008/uploads/cv.pdf"
   } catch (error) {
     console.error("Get CV error:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -62,7 +62,7 @@ export const downloadCv = async (req: Request, res: Response) => {
     // 2) PDF dosyasının tam yolu
     //   controllers/  →  projede uploads klasörü kökte
     //   runtime'ta (dist) da çalışsa, iki seviye yukarı çıkmak güvenli olur:
-    const filename = "Emre Gulsen CV.pdf";            // dosya adın
+    const filename = "cv.pdf";            // dosya adın
     const filePath = path.resolve(__dirname, "..", "..", "uploads", filename);
 
     // 3) İndirilebilir dosya olarak gönder

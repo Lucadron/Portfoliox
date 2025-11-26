@@ -14,7 +14,7 @@ export default function SkillGroup({ title, items }: { title: string; items: UiS
             <h3 className="text-lg font-semibold mb-4">  <span className="mr-2">{ICONS[title] ?? "⭐"}</span>{title}
             </h3>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                 {items.map(s => (
                     <div key={s.id} className="space-y-1">
                         <div className="flex justify-between text-sm">

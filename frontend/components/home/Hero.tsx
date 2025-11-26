@@ -12,7 +12,7 @@ export default function Hero() {
 
     const t = dict[lang];
 
-    const fileName = "Emre Gulsen CV.pdf"; // istersen: "Emre-Gulsen-CV.pdf"
+    const fileName = "cv.pdf"; // istersen: "Emre-Gulsen-CV.pdf"
     const cvDownloadUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/cv/download`;
     const cvApiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/cv/`;
 

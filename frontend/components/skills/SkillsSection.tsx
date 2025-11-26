@@ -41,7 +41,7 @@ export default function SkillsSection() {
     if (isError || !data) return <p className="text-red-500">Yetenekler yüklenemedi.</p>;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {data.map((g) => (
                 <SkillGroup key={g.title} title={g.title} items={g.items} />
             ))}
