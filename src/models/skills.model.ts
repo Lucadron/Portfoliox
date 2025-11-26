@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface ISkill extends Document {
   name: string;
   level: number; // 0–100 (yüzde)
-  category: "Frontend" | "Backend" | "Tools";
+  category: "Frontend" | "Backend" | "Database" | "Tools";
   order?: number;
 }
 
@@ -13,7 +13,7 @@ const SkillSchema: Schema = new Schema(
     level: { type: Number, required: true, min: 0, max: 100 },
     category: {
       type: String,
-      enum: ["Frontend", "Backend", "Tools"],
+      enum: ["Frontend", "Backend", "Database", "Tools"],
       required: true,
     },
     order: { type: Number, default: 0 },

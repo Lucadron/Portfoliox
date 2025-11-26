@@ -39,9 +39,6 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// // Preflight için:
-// app.options("*", cors({ origin: FRONTEND_ORIGIN }));
-
 app.use('/api', pingRouter);
 app.use('/api/projects', projectRouter);
 app.use('/api/overlord', authRouter);

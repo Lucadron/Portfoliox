@@ -6,7 +6,7 @@ export type UiSkill = {
     name: string;
     level?: number;   // 0-100
 };
-const ICONS: Record<string, string> = { Frontend: "🎨", Backend: "🧩", Tools: "🛠️" };
+const ICONS: Record<string, string> = { Frontend: "🎨", Backend: "🧩", Database: "⛃" , Tools: "🛠️" };
 
 export default function SkillGroup({ title, items }: { title: string; items: UiSkill[] }) {
     return (

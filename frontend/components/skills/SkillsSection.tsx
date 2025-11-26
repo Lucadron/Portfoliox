@@ -7,7 +7,7 @@ type ApiSkill = {
     _id: string;
     name: string;
     level: number; // 0–100
-    category: "Frontend" | "Backend" | "Tools";
+    category: "Frontend" | "Backend" | "Database" | "Tools";
     order?: number;
 };
 
@@ -18,7 +18,7 @@ export default function SkillsSection() {
             const res = await api.get<ApiSkill[]>("/api/skills");
             const arr = res.data ?? [];
 
-            const titles = ["Frontend", "Backend", "Tools"] as const;
+            const titles = ["Frontend", "Backend","Database", "Tools"] as const;
             return titles.map((title) => ({
                 title,
                 items: arr
