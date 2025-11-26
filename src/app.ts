@@ -21,13 +21,22 @@ app.use(express.json());
 
 // API routing
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN ?? "http://localhost:8009";
+
+const allowedOrigins = [
+  "http://localhost:8008",
+  "http://localhost:8009",
+  "https://emregulsen.vercel.app",
+];
 
 app.use(cors({
-  origin: FRONTEND_ORIGIN,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("CORS BLOCKED: " + origin));
+  },
+  credentials: false,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: false, // JWT header ile gidiyoruz; cookie yoksa false yeter
 }));
 
 // // Preflight için:
