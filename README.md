@@ -1,34 +1,65 @@
-# My Portfolio – Backend API (Türkçe)
+# 💼 My Portfolio – Backend API (Türkçe)
 
 📖 [View this README in English](README.en.md)
 
+---
+
 ## 🎯 Proje Amacı
 
-Bu proje, yazılım geliştiricilerin kendi portföy projelerini yönetebilmesi ve başvuru süreçlerinde modern bir API altyapısıyla profesyonel görünüm sunması için geliştirilmiştir.
+Bu proje, geliştiricilerin kendi portföy içeriklerini dinamik olarak yönetebileceği, modern ve güvenli bir RESTful API altyapısı oluşturarak, başvuru süreçlerinde öne çıkmalarını sağlayacak bir back-end çözümüdür. Aynı zamanda, TypeScript + Node.js + MongoDB teknolojilerini öğrenmek ve gerçek bir uygulama üzerinden deneyim kazanmak amacıyla geliştirilmiştir.
+
+---
 
 ## 🧱 Kullanılan Teknolojiler
 
-- **Node.js** – Sunucu ortamı
-- **Express.js** – REST API framework
-- **TypeScript** – Tip güvenliği için statik dil
-- **MongoDB + Mongoose** – Veritabanı ve şema yönetimi
-- **Zod** – API istekleri için runtime doğrulama
-- **Git & GitHub** – Versiyon kontrol ve kaynak kod barındırma
+| Katman        | Teknoloji             |
+|---------------|------------------------|
+| Dil           | TypeScript             |
+| Runtime       | Node.js                |
+| Framework     | Express.js             |
+| Veritabanı    | MongoDB + Mongoose     |
+| Doğrulama     | Zod                    |
+| Kimlik Doğrulama | JWT                 |
+| Middleware    | Express Custom Middleware |
+| Environment   | dotenv                 |
+| Sürüm Kontrol | Git + GitHub           |
 
-## ✅ Şu ana kadar yapılanlar
+---
 
-| Aşama | Açıklama |
-|-------|----------|
-| Express + TS kurulumu | Temel back-end altyapısı oluşturuldu |
-| Dosya yapısı | `controllers/`, `routes/`, `services/`, `models/`, `validators/` klasörleri oluşturuldu |
-| MongoDB bağlantısı | `connectDB()` fonksiyonu ile başarıyla entegre edildi |
-| Proje modeli | `IProject` interface + `ProjectSchema` tanımlandı |
-| CRUD işlemleri | `POST`, `GET`, `GET:id`, `PUT:id`, `DELETE:id` endpoint’leri çalışır durumda |
-| Validasyon | Tüm endpoint’lerde `zod` ile veri doğrulama sağlandı |
-| Git kurulumu | Git ile version kontrol sistemi başlatıldı |
-| GitHub bağlantısı | [Repo bağlantısı](https://github.com/Lucadron/My-Portfolio)
+## ✅ Yapılanlar
 
-## 🔧 Kurulum
+| Modül        | Açıklama                                                                 |
+|--------------|--------------------------------------------------------------------------|
+| Admin Login  | JWT tabanlı tek admin girişi aktif (`/api/overlord/login`)              |
+| Projeler     | CRUD işlemleri + görüntülenme sayacı (`/api/projects`)                  |
+| CV           | CV bağlantısı yönetimi + indirme sayaçlı API (`/api/cv`)                |
+| Hakkımda     | Dinamik düzenlenebilir Hakkımda bölümü (`/api/about`)                   |
+| Yetenekler   | Teknik beceri CRUD işlemleri (`/api/skills`)                            |
+| Hobiler      | Hobiler CRUD işlemleri (`/api/hobbies`)                                 |
+| İstatistik   | Tüm projelerin görüntülenme sayısı ve CV indirme sayısı (`/api/stats`)     |
+| İletişim     | Ziyaretçi mesajları alınabiliyor ve IP adresi loglanabiliyordu (`/api/contact`) |
+| Sağlık Kontrolü | Sunucunun çalıştığını test eden ping endpoint (`/api/ping`)          |
+
+---
+
+## 📁 Dosya Yapısı
+
+src/
+│
+├── controllers/
+├── routes/
+├── models/
+├── validators/
+├── services/
+├── middlewares/
+├── app.ts
+├── db.ts
+├── env.ts
+
+
+---
+
+## 🚀 Kurulum ve Çalıştırma
 
 ```bash
 git clone https://github.com/Lucadron/My-Portfolio.git
