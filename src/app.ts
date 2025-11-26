@@ -1,6 +1,8 @@
 // Express framework'ünü içe aktarıyoruz
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
+
 import pingRouter from './routes/ping.route';
 import projectRouter from './routes/project.route';
 import authRouter from './routes/auth.route';
@@ -19,6 +21,17 @@ app.use(express.json());
 
 // API routing
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN ?? "http://localhost:8009";
+
+app.use(cors({
+  origin: FRONTEND_ORIGIN,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false, // JWT header ile gidiyoruz; cookie yoksa false yeter
+}));
+
+// // Preflight için:
+// app.options("*", cors({ origin: FRONTEND_ORIGIN }));
 
 app.use('/api', pingRouter);
 app.use('/api/projects', projectRouter);

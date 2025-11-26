@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCv, updateCv } from '../controllers/cv.controller';
+import { getCv, updateCv, downloadCv } from '../controllers/cv.controller';
 import { protectRoute } from '../middlewares/auth.middleware';
 
 const router = express.Router();
@@ -9,5 +9,7 @@ router.get('/', getCv);
 
 // CV verisini güncelle (sadece admin erişebilir)
 router.put('/', protectRoute, updateCv);
+
+router.get("/download", downloadCv); // PUBLIC
 
 export default router;

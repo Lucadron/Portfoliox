@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Skill from '../models/skills.model';
 import { createSkillSchema, updateSkillSchema } from '../validators/skills.validator';
 
+
 // Tüm becerileri sırayla getir
 export const getAllSkills = async (_req: Request, res: Response) => {
   try {

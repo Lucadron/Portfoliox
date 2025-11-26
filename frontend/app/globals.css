@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ===== YENİ VE UYUMLU RENK TOKENLARI (SLATE/GRAY AĞIRLIKLI) ===== */
+:root {
+  /* Açık Tema Paleti */
+  --bg: #FAFAFA;
+  /* Sayfa zemini (En açık gri) */
+  --panel: #F3F4F6;
+  /* Bölüm/Arka plan zemini (Daha açık) */
+  --surface: #FFFFFF;
+  /* Kart yüzeyi (Saf beyaz) */
+  --text: #1F2937;
+  /* Ana Metin (Koyu gri/slate-800) */
+  --muted: #6B7280;
+  /* İkincil/Soluk Metin (slate-500) */
+  --border: #E5E7EB;
+  /* Kenarlık (Hafif gri) */
+
+  --primary: #1F2937;
+  /* Başlık/Koyu Mavi */
+  --accent: #3B82F6;
+  /* Vurgu Mavi (Blue-500) */
+  --success: #10B981;
+  /* Yeşil */
+  --ring: #93C5FD;
+  /* Focus Halkası */
+
+  --nav-h: 64px;
+}
+
+:where(#hero, #projects, #skills, #about, #contact) {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/* Karanlık Tema Paleti (Gerçekten Koyu ve Şık) */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F172A;
+  /* Sayfa zemini (Koyu Mavi/slate-900) */
+  --panel: #1E293B;
+  /* Bölüm/Arka plan zemini (slate-800) */
+  --surface: #334155;
+  /* Kart yüzeyi (slate-700) - Yüzey daha belirgin olmalı */
+  --text: #F9FAFB;
+  /* Ana Metin (Beyaz) */
+  --muted: #94A3B8;
+  /* İkincil/Soluk Metin (slate-400) */
+  --border: #334155;
+  /* Kenarlık (slate-700) - Yüzeyden biraz daha koyu */
+
+  --primary: #F9FAFB;
+  /* Başlık/Açık Metin */
+  --accent: #60A5FA;
+  /* Vurgu Mavi (Blue-400) */
+  --success: #34D399;
+  /* Yeşil */
+  --ring: #3B82F6;
+  /* Focus Halkası */
+}
+
+/* @media (prefers-color-scheme: dark) için önceki soft dark mod kaldırıldı. 
+   Tarayıcı otomatik karanlık modu kullanıyorsa yukarıdaki "dark" temayı alır. */
+
+
+/* ===== TAILWIND v4 TOKEN EŞLEMESİ ===== */
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+}
+
+/* ===== BASE STİLLER VE AKICILIK ===== */
+html {
+  /* Yumuşak kaydırma efekti */
+  scroll-behavior: smooth;
+  height: 100%;
+  /* HTML yüksekliğini tam yap */
+  /* Kaydırma sorununun en büyük nedeni: Eğer herhangi bir yerde overflow: hidden varsa, kaydırma çalışmaz. */
+  overflow-y: scroll;
+  /* Dikey kaydırmayı her zaman etkin tut */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+
+  /* Arka plan deseni ve rengi, theme'a göre ayarlandı */
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--border) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  /* Genişlik tanımı eklendi */
+  margin: 0;
+  /* Tarayıcı varsayılan margin'i kaldırıldı */
+}
+
+/* Arka plan ışıltısı */
+body::before {
+  content: "";
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+
+  /* Temaya göre daha iyi karışacak bir gradient kullanıldı */
+  background: radial-gradient(circle at center,
+      color-mix(in srgb, var(--accent) 50%, transparent) 0%,
+      color-mix(in srgb, var(--success) 40%, transparent) 40%,
+      transparent 70%);
+
+  filter: blur(120px);
+  /* Daha yumuşak bir blur */
+  z-index: -1;
+  pointer-events: none;
+  /* Etkileşimi engelleme */
+  opacity: 0.5;
+  /* Opaklık azaltıldı */
+  transition: background 0.5s ease;
+  /* Tema geçişlerinde yumuşaklık */
+
+  pointer-events: none;
+}
+
+/* ===== YARDIMCI SINIFLARIN İYİLEŞTİRİLMESİ ===== */
+
+/* Bölüm zemini: sayfa arka plandan bir ton koyu */
+.section {
+  background: var(--panel);
+  /* border'ı sadece alt ve üste değil, tüm kenarlara ekleyebiliriz veya kaldırabiliriz. 
+     Bu projede kart görselleri olduğundan, border'ı kartlara bıraktım. */
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* Kart/panel: Yüzey rengi + yumuşak gölge */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  /* Gölgeyi temaya göre hafifçe karartmak için color-mix kullanıldı */
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--text) 5%, transparent);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Kartlar üzerine gelince hafifçe kalkma efekti */
+.card:hover {
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--text) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+/* Birincil buton */
+.btn-primary {
+  background: var(--accent);
+  color: var(--surface);
+  /* Buton metni her zaman yüzey rengi (açık/beyaz) */
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  /* Hover efektinde renk tonunu değil, parlaklığını ayarlamak daha tutarlı */
+  filter: brightness(1.1);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+/* Focus halkası (Halka rengi accent'ten alınmalı, ring sadece fallback) */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+  /* Input'lar için yumuşaklık */
+}
+
+/* Cam efekti istersen (Geliştirilmiş Glassmorphism) */
+.glass {
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  backdrop-filter: blur(20px);
+  /* Daha güçlü blur */
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+/* İletişim Formu Input Stili (Örnek olarak kullanıldı, Tailwind sınıfları ile bunu halledebilirsiniz) */
+.input-field {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  /* ... diğer stiller ... */
+}

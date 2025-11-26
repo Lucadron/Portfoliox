@@ -12,12 +12,18 @@ export const handleCreateContact = async (req: Request, res: Response) => {
 
         const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
+        // Bu fonksiyonun mesajı veritabanına kaydettiğini varsayıyoruz.
         const contact = await createContact({ ...parsed.data, ipAddress: String(ipAddress) });
 
+        // ... payload doğrulama ve kaydetme sonrası: (İstenen kodun entegre edilmiş hali)
+        const saved = contact; // createContact'tan dönen nesne zaten kaydedilmiştir.
+
         return res.status(201).json({
-            message: 'Mesaj başarıyla gönderildi',
-            data: contact,
+            ok: true,
+            _id: saved._id, // Kaydedilen mesajın ID'si
+            message: "Mesaj kaydedildi",
         });
+
     } catch (error) {
         console.error('Create contact error:', error);
         return res.status(500).json({ error: 'Internal server error' });
