@@ -4,11 +4,6 @@ import { updateCvSchema } from '../validators/cv.validator';
 import { incrementCvDownloads } from '../services/stats.service';
 import path from 'path';
 
-// CV linkini getir ve sayaç artır
-import { Request, Response } from "express";
-import Cv from "../models/cv.model";
-import { incrementCvDownloads } from "../services/cv.service"; // senin increment fonksiyonunun yolu
-
 export const getCv = async (req: Request, res: Response) => {
   try {
     const cv = await Cv.findOne();
