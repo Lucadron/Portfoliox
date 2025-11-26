@@ -1,19 +1,52 @@
 "use client";
+
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import ProjectCard, { UiProject } from "./ProjectCard";
 
-type Any = Record<string, any>;
+// API'den gelen ham proje tipini genel ama typesafe tutuyoruz
+type RawProject = Record<string, unknown>;
 
-function toUiProject(x: Any): UiProject {
+function toUiProject(x: RawProject): UiProject {
+    const getString = (...keys: string[]): string => {
+        for (const key of keys) {
+            const value = x[key];
+            if (typeof value === "string" && value.trim() !== "") {
+                return value;
+            }
+        }
+        return "";
+    };
+
+    const getStringArray = (...keys: string[]): string[] => {
+        for (const key of keys) {
+            const value = x[key];
+
+            if (Array.isArray(value)) {
+                return value.map((v) => String(v));
+            }
+
+            if (typeof value === "string" && value.trim() !== "") {
+                return value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+            }
+        }
+        return [];
+    };
+
+    const idSource = x["_id"] ?? x["id"];
+    const id = idSource ? String(idSource) : crypto.randomUUID();
+
     return {
-        id: String(x._id ?? x.id ?? crypto.randomUUID()),
-        title: String(x.title ?? x.name ?? x.projectTitle ?? "Untitled"),
-        description: x.description ?? x.desc ?? "",
-        image: x.coverUrl ?? x.imageUrl ?? x.thumbnail ?? "",
-        tech: x.tech ?? x.techStack ?? x.technologies ?? [],
-        liveUrl: x.liveUrl ?? x.demoUrl ?? x.previewUrl ?? "",
-        githubUrl: x.githubUrl ?? x.repoUrl ?? "",
+        id,
+        title: getString("title", "name", "projectTitle") || "Untitled",
+        description: getString("description", "desc"),
+        image: getString("coverUrl", "imageUrl", "thumbnail"),
+        tech: getStringArray("tech", "techStack", "technologies"),
+        liveUrl: getString("liveUrl", "demoUrl", "previewUrl"),
+        githubUrl: getString("githubUrl", "repoUrl"),
     };
 }
 
@@ -22,7 +55,20 @@ export default function ProjectGrid() {
         queryKey: ["projects"],
         queryFn: async () => {
             const res = await api.get("/api/projects");
-            const arr: Any[] = Array.isArray(res.data) ? res.data : res.data?.projects ?? [];
+            const body = res.data as unknown;
+
+            let arr: RawProject[] = [];
+
+            if (Array.isArray(body)) {
+                arr = body as RawProject[];
+            } else if (
+                body &&
+                typeof body === "object" &&
+                Array.isArray((body as Record<string, unknown>).projects)
+            ) {
+                arr = (body as Record<string, unknown>).projects as RawProject[];
+            }
+
             return arr.map(toUiProject);
         },
     });
@@ -37,8 +83,13 @@ export default function ProjectGrid() {
         );
     }
 
-    if (isError || !data) return <p className="text-red-500">Projeler yüklenemedi.</p>;
-    if (data.length === 0) return <p className="text-foreground/60">Henüz proje eklenmemiş.</p>;
+    if (isError || !data) {
+        return <p className="text-red-500">Projeler yüklenemedi.</p>;
+    }
+
+    if (data.length === 0) {
+        return <p className="text-foreground/60">Henüz proje eklenmemiş.</p>;
+    }
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
