@@ -1,24 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
-import type { Lang } from "@/lib/i18n";
+import { useLang } from "@/context/LangContext";
 
 export default function LangToggle() {
-    const [lang, setLang] = useState<Lang>("tr");
-
-    useEffect(() => {
-        const saved = (localStorage.getItem("lang") as Lang) || "tr";
-        setLang(saved);
-        document.documentElement.lang = saved;
-    }, []);
-    useEffect(() => {
-        localStorage.setItem("lang", lang);
-        document.documentElement.lang = lang;
-    }, [lang]);
+    const { lang, setLang } = useLang();
 
     return (
-        <select value={lang} onChange={e => setLang(e.target.value as Lang)} className="glass px-2 py-1" aria-label="Dil">
-            <option value="tr">TR</option>
-            <option value="en">EN</option>
+        <select
+            value={lang}
+            onChange={(e) => setLang(e.target.value as "tr" | "en")}
+            className="
+                px-3 py-1 rounded-md border 
+                bg-white text-black 
+                dark:bg-gray-800 dark:text-white 
+                dark:border-gray-600
+            "
+        >
+            <option className="bg-white text-black dark:bg-gray-800 dark:text-white" value="tr">TR</option>
+            <option className="bg-white text-black dark:bg-gray-800 dark:text-white" value="en">EN</option>
         </select>
     );
 }
