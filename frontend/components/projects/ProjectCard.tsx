@@ -17,9 +17,13 @@ export default function ProjectCard({ p }: { p: UiProject }) {
             <div className="aspect-[16/9] bg-neutral overflow-hidden">
                 {p.image ? (
                     <img
-                        src={p.image}
+                        src={p.image ? `${p.image}` : "/projects/project-default.jpg"}
                         alt={p.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition"
+                        className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/projects/project-default.jpg";
+                        }}
+
                     />
                 ) : (
                     <div className="w-full h-full grid place-items-center text-foreground/40 text-sm">
