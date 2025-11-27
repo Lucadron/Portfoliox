@@ -25,7 +25,7 @@ export default function Hero() {
                 <p className="text-lg text-foreground/80">{t.heroSubtitle}</p>
 
                 <a
-                    href={cvApiUrl}
+                    href={`${process.env.NEXT_PUBLIC_API_URL}/api/cv/download`}
                     download
                     target="_blank"
                     rel="noopener noreferrer"
