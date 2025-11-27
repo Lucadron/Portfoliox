@@ -4,8 +4,8 @@ import Providers from "./providers";
 import Navbar from "@/components/shared/Navbar";
 
 export const metadata: Metadata = {
-  title: "PortfolioX",
-  description: "Personal portfolio",
+  title: "Emre Gülşen",
+  description: "Emre Gulsen CV Website",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
