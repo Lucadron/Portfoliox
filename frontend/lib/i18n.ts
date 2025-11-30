@@ -2,68 +2,88 @@ export type Lang = "tr" | "en";
 
 export const dict = {
     tr: {
-        // NAVBAR
+        // Navbar
         nav: {
-            home: "Anasayfa",
             projects: "Projeler",
             skills: "Yetenekler",
             about: "Hakkımda",
             contact: "İletişim",
         },
 
-        // HERO
+        // Hero
         heroTitle: "Merhaba, ben Emre",
         heroSubtitle: "Software Engineer | Bilişim Sistemleri Mühendisi",
         downloadCV: "CV İndir",
 
-        // STATS
+        // Stats (eğer varsa kartların başlıkları)
         stats: {
             projects: "Projeler",
-            views: "Proje Görüntülenmeleri",
-            downloads: "CV İndirmeleri",
+            projectViews: "Proje Görüntülenmeleri",
+            cvDownloads: "CV İndirmeleri",
         },
 
-        // ABOUT
-        aboutTitle: "Hakkımda",
-        aboutDescription:
-            "4+ yıllık tecrübeye sahip bir Full-Stack Developer olarak .NET, Node.js, React, MongoDB ve MSSQL alanlarında üretim seviyesinde projeler geliştiriyorum. Temiz kod, sağlam mimari ve performans odaklı uygulamalar geliştirmeye önem veriyorum.",
+        // Bölüm başlıkları / alt yazılar
+        sections: {
+            projectsTitle: "Projeler",
+            projectsSubtitle: "Gerçek problem çözen, backend odaklı projeler.",
+            skillsTitle: "Yetenekler",
+            skillsSubtitle: "Sık kullandığım teknolojiler ve araçlar.",
+            aboutTitle: "Hakkımda",
+            aboutSubtitle: "Deneyim, eğitim ve kariyer yolculuğum.",
+            hobbiesTitle: "Hobiler",
+            hobbiesSubtitle: "Boş zamanlarımda yaptığım şeyler.",
+            contactTitle: "İletişim",
+            contactSubtitle: "Birlikte çalışmak istersen bana buradan yazabilirsin.",
+        },
 
-        // SKILLS
-        skillsTitle: "Yetenekler",
-        skillsSubtitle: "Backend, Frontend, Database ve DevOps yeteneklerim",
+        // Yetenek kategori başlıkları
+        skillsCategories: {
+            Frontend: "Frontend",
+            Backend: "Backend",
+            Database: "Veritabanı",
+            Tools: "Araçlar",
+        },
 
-        // PROJECTS
-        projectsTitle: "Projeler",
-        projectsSubtitle: "Geliştirdiğim projeler ve çalışmalarım",
-
-        // HOBBIES
-        hobbiesTitle: "Hobilerim",
-        hobbiesSubtitle: "Kendimi geliştirmek için yaptığım aktiviteler",
-
-        // CONTACT
-        contactTitle: "İletişime Geç",
-        contactSubtitle: "Bana mesaj gönderebilir veya bağlantı kurabilirsin",
-
-        form: {
-            name: "Ad Soyad",
-            email: "E-posta",
+        // Contact form
+        contact: {
+            title: "İletişim 📞",
+            subtitle:
+                "İşbirliği yapmak için bana buradan bir mesaj bırakabilirsin. Geri dönüş yapmaktan memnuniyet duyarım!",
+            name: "Adınız",
+            email: "E-posta Adresiniz",
+            subject: "Konu",
             message: "Mesajınız",
             send: "Gönder",
             sending: "Gönderiliyor...",
-            success: "Mesaj başarıyla gönderildi!",
-            error: "Gönderilemedi! Daha sonra tekrar deneyin.",
+            success: "Mesajınız alındı! ✅",
+            error: "Gönderilemedi, tekrar deneyin. ❌",
         },
 
-        // FOOTER
-        footer: {
-            text: "Tüm hakları saklıdır.",
+        // Hobbies
+        hobbies: {
+            fallbackTitle: "Hobi",
+            loadingError: "Hobiler yüklenemedi.",
+        },
+
+        // Projects
+        projects: {
+            loadingError: "Projeler yüklenemedi.",
+            empty: "Henüz proje eklenmemiş.",
+            noCover: "Kapak görseli yok",
+            live: "Canlı",
+            github: "GitHub",
+        },
+
+        // About section başlıkları
+        about: {
+            aboutTitle: "Hakkımda",
+            experienceTitle: "Deneyim",
+            educationTitle: "Eğitim",
         },
     },
 
-    // ENGLISH
     en: {
         nav: {
-            home: "Home",
             projects: "Projects",
             skills: "Skills",
             about: "About",
@@ -71,43 +91,66 @@ export const dict = {
         },
 
         heroTitle: "Hi, I'm Emre",
-        heroSubtitle: "Software Engineer | Information System Engineer",
+        heroSubtitle: "Software Developer | Information Systems Engineer",
         downloadCV: "Download CV",
 
         stats: {
             projects: "Projects",
-            views: "Project Views",
-            downloads: "CV Downloads",
+            projectViews: "Project Views",
+            cvDownloads: "CV Downloads",
         },
 
-        aboutTitle: "About Me",
-        aboutDescription:
-            "I am a Full-Stack Developer with 4+ years of experience, building production-level applications with .NET, Node.js, React, MSSQL and MongoDB. I focus on clean code, solid architecture and performance-driven development.",
+        sections: {
+            projectsTitle: "Projects",
+            projectsSubtitle: "Backend-focused, real-world problem solving projects.",
+            skillsTitle: "Skills",
+            skillsSubtitle: "Technologies and tools I use frequently.",
+            aboutTitle: "About Me",
+            aboutSubtitle: "My experience, education and career journey.",
+            hobbiesTitle: "Hobbies",
+            hobbiesSubtitle: "Things I enjoy in my free time.",
+            contactTitle: "Contact",
+            contactSubtitle: "Reach out if you’d like to work together.",
+        },
 
-        skillsTitle: "Skills",
-        skillsSubtitle: "My backend, frontend, database and DevOps skills",
+        skillsCategories: {
+            Frontend: "Frontend",
+            Backend: "Backend",
+            Database: "Database",
+            Tools: "Tools",
+        },
 
-        projectsTitle: "Projects",
-        projectsSubtitle: "Some of my work and contributions",
-
-        hobbiesTitle: "Hobbies",
-        hobbiesSubtitle: "Activities I enjoy and improve myself with",
-
-        contactTitle: "Contact Me",
-        contactSubtitle: "You can send me a message or reach out",
-
-        form: {
-            name: "Full Name",
-            email: "Email",
+        contact: {
+            title: "Contact 📞",
+            subtitle:
+                "You can send me a message here if you’d like to collaborate. I’d be happy to get back to you!",
+            name: "Name",
+            email: "Email Address",
+            subject: "Subject",
             message: "Message",
             send: "Send",
             sending: "Sending...",
-            success: "Message sent successfully!",
-            error: "Failed to send message! Please try again later.",
+            success: "Your message has been received! ✅",
+            error: "Could not send, please try again. ❌",
         },
 
-        footer: {
-            text: "All rights reserved.",
+        hobbies: {
+            fallbackTitle: "Hobby",
+            loadingError: "Hobbies could not be loaded.",
+        },
+
+        projects: {
+            loadingError: "Projects could not be loaded.",
+            empty: "No projects have been added yet.",
+            noCover: "No cover image",
+            live: "Live",
+            github: "GitHub",
+        },
+
+        about: {
+            aboutTitle: "About Me",
+            experienceTitle: "Experience",
+            educationTitle: "Education",
         },
     },
 } as const;
