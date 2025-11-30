@@ -31,7 +31,7 @@ export default function ThemeToggle() {
     }, [pref]);
 
     return (
-        <div className="glass flex items-center gap-2 px-3 py-2 rounded-full">
+        <div className="glass flex items-center gap-2 px-3 py-2 whitespace-nowrap">
             <button
                 className={`px-2 py-1 rounded-full ${pref === "light" ? "bg-accent text-white" : "bg-neutral"
                     }`}
