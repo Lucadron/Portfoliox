@@ -1,34 +1,39 @@
 "use client";
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
+import { useLang } from "@/context/LangContext";
+import { dict } from "@/lib/i18n";
 
 type HobbyRaw = {
     _id: string;
     title?: string;
-    name?: string;           // olası eski alan
+    name?: string;
     description?: string;
-    desc?: string;           // olası eski alan
+    desc?: string;
     icon?: string;
 };
 
 type Hobby = { id: string; title: string; description?: string; icon?: string };
 
-function normalize(h: HobbyRaw): Hobby {
+function normalize(h: HobbyRaw, fallbackTitle: string): Hobby {
     return {
         id: String(h._id),
-        title: (h.title || h.name || "Hobi").trim(),
+        title: (h.title || h.name || fallbackTitle).trim(),
         description: (h.description || h.desc || "").trim(),
         icon: h.icon || "🎯",
     };
 }
 
 export default function HobbyGrid() {
+    const { lang } = useLang();
+    const t = dict[lang].hobbies;
+
     const { data, isLoading, isError } = useQuery<Hobby[]>({
         queryKey: ["hobbies"],
         queryFn: async () => {
             const res = await api.get("/api/hobbies");
             const arr = Array.isArray(res.data) ? res.data : [];
-            return arr.map(normalize);
+            return arr.map((h) => normalize(h, t.fallbackTitle));
         },
     });
 
@@ -41,7 +46,7 @@ export default function HobbyGrid() {
             </div>
         );
     }
-    if (isError || !data) return <p className="text-red-500">Hobiler yüklenemedi.</p>;
+    if (isError || !data) return <p className="text-red-500">{t.loadingError}</p>;
 
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -53,7 +58,9 @@ export default function HobbyGrid() {
                     <div className="min-w-0">
                         <div className="font-medium truncate">{h.title}</div>
                         {h.description ? (
-                            <p className="text-sm text-muted whitespace-pre-line break-words">{h.description}</p>
+                            <p className="text-sm text-muted whitespace-pre-line break-words">
+                                {h.description}
+                            </p>
                         ) : null}
                     </div>
                 </div>

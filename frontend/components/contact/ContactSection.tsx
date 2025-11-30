@@ -1,8 +1,13 @@
 "use client";
 import { api } from "@/lib/api";
 import { useState } from "react";
+import { useLang } from "@/context/LangContext";
+import { dict } from "@/lib/i18n";
 
 export default function ContactSection() {
+    const { lang } = useLang();
+    const t = dict[lang].contact;
+
     const [loading, setLoading] = useState(false);
     const [ok, setOk] = useState<null | boolean>(null);
 
@@ -18,7 +23,6 @@ export default function ContactSection() {
             message: String(fd.get("message") || "").trim(),
         };
 
-        // basit kontroller
         if (!payload.name || !payload.email || !payload.message) {
             setOk(false);
             return;
@@ -26,15 +30,9 @@ export default function ContactSection() {
 
         try {
             setLoading(true);
-
             await api.post("/api/contact", payload);
-
             setOk(true);
-
-            if (e?.currentTarget) {
-                e.currentTarget.reset();
-            }
-
+            e.currentTarget.reset();
         } catch (err) {
             console.error(err);
             setOk(false);
@@ -43,21 +41,16 @@ export default function ContactSection() {
         }
     }
 
-
-    // Ortak input stilin (senin palete uyumlu)
     const inputStyle =
         "w-full border border-border bg-surface text-text placeholder-muted rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 shadow-sm";
 
     return (
-        <div className="max-w-6xl mx-auto p-6 lg:p-10 card">
+        <div id="contact" className="max-w-6xl mx-auto p-6 lg:p-10 card">
             <div className="grid md:grid-cols-2 gap-10">
                 {/* Sol blok */}
                 <div className="space-y-4 md:space-y-6 self-start md:self-center">
-                    <h3 className="text-3xl font-bold text-primary">İletişim 📞</h3>
-                    <p className="text-lg text-muted">
-                        İşbirliği yapmak için bana buradan bir
-                        mesaj bırakabilirsin. Geri dönüş yapmaktan memnuniyet duyarım!
-                    </p>
+                    <h3 className="text-3xl font-bold text-primary">{t.title}</h3>
+                    <p className="text-lg text-muted">{t.subtitle}</p>
                 </div>
 
                 {/* Form */}
@@ -66,22 +59,22 @@ export default function ContactSection() {
                     className="p-6 sm:p-8 rounded-lg shadow-md space-y-5 bg-panel border border-border"
                 >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input name="name" placeholder="Adınız" className={inputStyle} required />
+                        <input name="name" placeholder={t.name} className={inputStyle} required />
                         <input
                             name="email"
                             type="email"
-                            placeholder="E-posta Adresiniz"
+                            placeholder={t.email}
                             className={inputStyle}
                             required
                         />
                     </div>
 
-                    <input name="subject" required placeholder="Konu" className={inputStyle} />
+                    <input name="subject" required placeholder={t.subject} className={inputStyle} />
 
                     <textarea
                         name="message"
                         rows={6}
-                        placeholder="Mesajınız"
+                        placeholder={t.message}
                         className={inputStyle + " resize-y"}
                         required
                     />
@@ -92,18 +85,18 @@ export default function ContactSection() {
                             type="submit"
                             className="btn-primary px-6 py-2.5 rounded-lg shadow-md transition duration-300 disabled:opacity-50"
                         >
-                            {loading ? "Gönderiliyor..." : "Gönder"}
+                            {loading ? t.sending : t.send}
                         </button>
 
                         <div className="min-h-[20px]">
                             {ok === true && (
                                 <span className="text-success font-medium flex items-center gap-1">
-                                    Mesajınız alındı! ✅
+                                    {t.success}
                                 </span>
                             )}
                             {ok === false && (
                                 <span className="text-red-500 font-medium flex items-center gap-1">
-                                    Gönderilemedi, tekrar deneyin. ❌
+                                    {t.error}
                                 </span>
                             )}
                         </div>
