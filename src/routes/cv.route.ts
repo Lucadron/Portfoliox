@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCv, updateCv, downloadCv } from '../controllers/cv.controller';
+import { getCv, updateCv, downloadCv, increaseCvCounterOnly } from '../controllers/cv.controller';
 import { protectRoute } from '../middlewares/auth.middleware';
 
 const router = express.Router();
@@ -11,5 +11,6 @@ router.get('/', getCv);
 router.put('/', protectRoute, updateCv);
 
 router.get("/download", downloadCv); // PUBLIC
+router.get("/download-counter", increaseCvCounterOnly);
 
 export default router;

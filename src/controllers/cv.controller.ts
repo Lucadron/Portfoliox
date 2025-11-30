@@ -11,12 +11,26 @@ export const downloadCv = async (req: Request, res: Response) => {
       await cv.save();
     }
 
-    const filePath = path.resolve(__dirname, "..", "..", "uploads", "cv.pdf");
+    const filePath = path.resolve(__dirname, "..", "..", "uploads", "Emre-Gulsen-CV.pdf");
 
     return res.download(filePath, "Emre-Gulsen-CV.pdf");
   } catch (err) {
     console.error("CV download error:", err);
     return res.status(500).json({ error: "CV indirilemedi" });
+  }
+};
+
+export const increaseCvCounterOnly = async (req: Request, res: Response) => {
+  try {
+    const cv = await Cv.findOne();
+    if (cv) {
+      cv.downloadCount = (cv.downloadCount || 0) + 1;
+      await cv.save();
+    }
+    return res.status(200).json({ ok: true });
+  } catch (err) {
+    console.error("CV counter error:", err);
+    return res.status(500).json({ error: "Counter failed" });
   }
 };
 
