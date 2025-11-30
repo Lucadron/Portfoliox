@@ -1,5 +1,8 @@
 "use client";
 
+import { useLang } from "@/context/LangContext";
+import { dict } from "@/lib/i18n";
+
 export type UiProject = {
     id: string;
     title: string;
@@ -11,25 +14,23 @@ export type UiProject = {
 };
 
 export default function ProjectCard({ p }: { p: UiProject }) {
+    const { lang } = useLang();
+    const t = dict[lang].projects;
+
+    const imageSrc = p.image && p.image.trim() !== "" ? p.image : "/projects/project-default.jpg";
+
     return (
         <article className="card group overflow-hidden transition">
             {/* Kapak */}
             <div className="aspect-[16/9] bg-neutral overflow-hidden">
-                {p.image ? (
-                    <img
-                        src={p.image ? `${p.image}` : "/projects/project-default.jpg"}
-                        alt={p.title}
-                        className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/projects/project-default.jpg";
-                        }}
-
-                    />
-                ) : (
-                    <div className="w-full h-full grid place-items-center text-foreground/40 text-sm">
-                        Kapak görseli yok
-                    </div>
-                )}
+                <img
+                    src={imageSrc}
+                    alt={p.title}
+                    className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition"
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/projects/project-default.jpg";
+                    }}
+                />
             </div>
 
             {/* İçerik */}
@@ -41,9 +42,9 @@ export default function ProjectCard({ p }: { p: UiProject }) {
 
                 {Array.isArray(p.tech) && p.tech.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
-                        {p.tech.map((t) => (
-                            <span key={t} className="text-xs px-2 py-1 rounded-full bg-neutral">
-                                {t}
+                        {p.tech.map((tTech) => (
+                            <span key={tTech} className="text-xs px-2 py-1 rounded-full bg-neutral">
+                                {tTech}
                             </span>
                         ))}
                     </div>
@@ -51,13 +52,23 @@ export default function ProjectCard({ p }: { p: UiProject }) {
 
                 <div className="mt-auto flex gap-4 pt-1">
                     {p.liveUrl ? (
-                        <a className="text-accent underline" href={p.liveUrl} target="_blank" rel="noopener noreferrer">
-                            Live
+                        <a
+                            className="text-accent underline"
+                            href={p.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {t.live}
                         </a>
                     ) : null}
                     {p.githubUrl ? (
-                        <a className="text-primary underline" href={p.githubUrl} target="_blank" rel="noopener noreferrer">
-                            GitHub
+                        <a
+                            className="text-primary underline"
+                            href={p.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {t.github}
                         </a>
                     ) : null}
                 </div>

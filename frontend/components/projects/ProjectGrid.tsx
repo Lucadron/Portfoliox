@@ -3,6 +3,8 @@
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import ProjectCard, { UiProject } from "./ProjectCard";
+import { useLang } from "@/context/LangContext";
+import { dict } from "@/lib/i18n";
 
 // API'den gelen ham proje tipini genel ama typesafe tutuyoruz
 type RawProject = Record<string, unknown>;
@@ -51,6 +53,9 @@ function toUiProject(x: RawProject): UiProject {
 }
 
 export default function ProjectGrid() {
+    const { lang } = useLang();
+    const t = dict[lang].projects;
+
     const { data, isLoading, isError } = useQuery<UiProject[]>({
         queryKey: ["projects"],
         queryFn: async () => {
@@ -84,11 +89,11 @@ export default function ProjectGrid() {
     }
 
     if (isError || !data) {
-        return <p className="text-red-500">Projeler yüklenemedi.</p>;
+        return <p className="text-red-500">{t.loadingError}</p>;
     }
 
     if (data.length === 0) {
-        return <p className="text-foreground/60">Henüz proje eklenmemiş.</p>;
+        return <p className="text-foreground/60">{t.empty}</p>;
     }
 
     return (
