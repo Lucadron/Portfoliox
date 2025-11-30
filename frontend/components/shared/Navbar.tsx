@@ -12,12 +12,14 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 w-full backdrop-blur bg-background/70 border-b">
-            <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-                <Link href="/" className="font-semibold hover:opacity-80 transition">
+            <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
+                <Link href="#top"
+                className="font-semibold hover:opacity-80 transition"
+                >
                     Emre Gulsen
                 </Link>
 
-                <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-4 text-sm flex-wrap">
                     <a href="#projects" className="hover:opacity-80">
                         {t.nav.projects}
                     </a>
@@ -32,7 +34,7 @@ export default function Navbar() {
                     </a>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-shrink-0">
                     <LangToggle />
                     <ThemeToggle />
                 </div>
