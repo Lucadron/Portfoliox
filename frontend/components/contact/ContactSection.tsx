@@ -30,9 +30,15 @@ export default function ContactSection() {
 
         try {
             setLoading(true);
+
             await api.post("/api/contact", payload);
+
             setOk(true);
-            e.currentTarget.reset();
+
+            if (e?.currentTarget) {
+                e.currentTarget.reset();
+            }
+
         } catch (err) {
             console.error(err);
             setOk(false);
@@ -40,7 +46,6 @@ export default function ContactSection() {
             setLoading(false);
         }
     }
-
     const inputStyle =
         "w-full border border-border bg-surface text-text placeholder-muted rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 shadow-sm";
 
