@@ -1,5 +1,7 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { ChevronUp } from "lucide-react";
 
 export default function ScrollTopButton() {
     const [show, setShow] = useState(false);
@@ -15,10 +17,17 @@ export default function ScrollTopButton() {
     return (
         <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-6 right-6 z-[999] w-12 h-12 rounded-full bg-accent text-white shadow-lg hover:bg-accent/80 transition flex items-center justify-center text-xl"
-            aria-label="Scroll to top"
+            className="
+            fixed bottom-6 right-6 z-[999]
+            w-12 h-12 rounded-full
+            backdrop-blur bg-background/70 border border-border
+            shadow-xl hover:shadow-2xl
+            flex items-center justify-center
+            transition-transform hover:scale-110 
+            text-accent
+        "
         >
-            ↑
+            <ChevronUp size={22} />
         </button>
     );
 }
