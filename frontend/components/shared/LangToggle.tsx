@@ -1,4 +1,5 @@
 "use client";
+
 import { useLang } from "@/context/LangContext";
 
 export default function LangToggle() {
@@ -8,15 +9,11 @@ export default function LangToggle() {
         <select
             value={lang}
             onChange={(e) => setLang(e.target.value as "tr" | "en")}
-            className="
-                px-3 py-1 rounded-md border 
-                bg-white text-black 
-                dark:bg-gray-800 dark:text-white 
-                dark:border-gray-600
-            "
+            className="px-3 py-1 rounded-full border border-border bg-surface text-foreground text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
         >
-            <option className="bg-white text-black dark:bg-gray-800 dark:text-white" value="tr">TR</option>
-            <option className="bg-white text-black dark:bg-gray-800 dark:text-white" value="en">EN</option>
+            <option value="tr">TR</option>
+            <option value="en">EN</option>
         </select>
     );
 }
+ 
