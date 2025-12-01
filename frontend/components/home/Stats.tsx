@@ -2,6 +2,8 @@
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useLang } from "@/context/LangContext";
+import { dict } from "@/lib/i18n";
 
 type StatsResponse = {
     totalProjects: number;
@@ -28,6 +30,9 @@ function Counter({ value }: { value: number | undefined }) {
 }
 
 export default function Stats() {
+    const { lang } = useLang();
+    const t = dict[lang];
+
     const { data, isLoading, isError } = useQuery<StatsResponse>({
         queryKey: ["stats"],
         queryFn: async () => {
@@ -56,17 +61,23 @@ export default function Stats() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-12 text-center">
             <div className="glass p-4 rounded-xl">
                 <h3 className="text-2xl font-bold text-accent"><Counter value={projects} /></h3>
-                <p className="text-sm">Projeler</p>
+                <p className="text-sm">
+                    {t.stats.projects}
+                </p>
             </div>
 
             <div className="glass p-4 rounded-xl">
                 <h3 className="text-2xl font-bold text-primary"><Counter value={views} /></h3>
-                <p className="text-sm">Proje Görüntülenmeleri</p>
+                <p className="text-sm">
+                    {t.stats.projectViews}
+                </p>
             </div>
 
             <div className="glass p-4 rounded-xl">
                 <h3 className="text-2xl font-bold text-secondary"><Counter value={downloads} /></h3>
-                <p className="text-sm">CV İndirmeleri</p>
+                <p className="text-sm">
+                    {t.stats.cvDownloads}
+                </p>
             </div>
         </div>
     );
