@@ -1,6 +1,6 @@
 "use client";
 import { api } from "@/lib/api";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLang } from "@/context/LangContext";
 import { dict } from "@/lib/i18n";
 
@@ -10,6 +10,9 @@ export default function ContactSection() {
 
     const [loading, setLoading] = useState(false);
     const [ok, setOk] = useState<null | boolean>(null);
+
+    // 🔥 FORMU GARANTİ SIFIRLAMAK İÇİN REF
+    const formRef = useRef<HTMLFormElement>(null);
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -35,9 +38,8 @@ export default function ContactSection() {
 
             setOk(true);
 
-            if (e?.currentTarget) {
-                e.currentTarget.reset();
-            }
+            // ⬇⬇⬇ FORM’U KESİN OLARAK SIFIRLAYAN SAF VE GÜVENLİ KOMUT
+            formRef.current?.reset();
 
         } catch (err) {
             console.error(err);
@@ -46,20 +48,21 @@ export default function ContactSection() {
             setLoading(false);
         }
     }
+
     const inputStyle =
         "w-full border border-border bg-surface text-text placeholder-muted rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 shadow-sm";
 
     return (
         <div id="contact" className="max-w-6xl mx-auto p-6 lg:p-10 card">
             <div className="grid md:grid-cols-2 gap-10">
-                {/* Sol blok */}
                 <div className="space-y-4 md:space-y-6 self-start md:self-center">
                     <h3 className="text-3xl font-bold text-primary">{t.title}</h3>
                     <p className="text-lg text-muted">{t.subtitle}</p>
                 </div>
 
-                {/* Form */}
+                {/* 🔥 FORM REF'İ EKLENDİ */}
                 <form
+                    ref={formRef}
                     onSubmit={onSubmit}
                     className="p-6 sm:p-8 rounded-lg shadow-md space-y-5 bg-panel border border-border"
                 >
