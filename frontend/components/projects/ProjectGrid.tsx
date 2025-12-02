@@ -57,9 +57,9 @@ export default function ProjectGrid() {
     const t = dict[lang].projects;
 
     const { data, isLoading, isError } = useQuery<UiProject[]>({
-        queryKey: ["projects"],
+        queryKey: ["projects", lang],
         queryFn: async () => {
-            const res = await api.get("/api/projects");
+            const res = await api.get(`/api/projects?lang=${lang}`);
             const body = res.data as unknown;
 
             let arr: RawProject[] = [];

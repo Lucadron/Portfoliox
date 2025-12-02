@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useLang } from "@/context/LangContext";
 import { dict } from "@/lib/i18n";
 
@@ -17,10 +18,15 @@ export default function ProjectCard({ p }: { p: UiProject }) {
     const { lang } = useLang();
     const t = dict[lang].projects;
 
+    const [expanded, setExpanded] = useState(false); // 🔥 Mobil için toggle durumu
+
     const imageSrc = p.image && p.image.trim() !== "" ? p.image : "/projects/project-default.jpg";
 
     return (
-        <article className="card group overflow-hidden transition">
+        <article
+            className="card group overflow-hidden transition cursor-pointer"
+            onClick={() => setExpanded((prev) => !prev)} // 🔥 mobilde açıklamayı aç/kapat
+        >
             {/* Kapak */}
             <div className="aspect-[16/9] bg-neutral overflow-hidden">
                 <img
@@ -36,8 +42,19 @@ export default function ProjectCard({ p }: { p: UiProject }) {
             {/* İçerik */}
             <div className="p-4 flex flex-col gap-3 flex-1">
                 <h3 className="text-lg font-semibold line-clamp-1">{p.title}</h3>
+
+                {/* Açıklama */}
                 {p.description ? (
-                    <p className="text-sm text-foreground/80 line-clamp-2">{p.description}</p>
+                    <p
+                        className={`
+                            text-sm text-foreground/80 transition-all duration-300
+                            line-clamp-2 
+                            group-hover:line-clamp-none        /* Desktop hover */
+                            ${expanded ? "line-clamp-none" : ""} /* 🔥 Mobile tıklayınca aç */
+                        `}
+                    >
+                        {p.description}
+                    </p>
                 ) : null}
 
                 {Array.isArray(p.tech) && p.tech.length > 0 ? (
@@ -57,16 +74,19 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                             href={p.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()} // 🔥 Link tıklanınca kart açılmasın
                         >
                             {t.live}
                         </a>
                     ) : null}
+
                     {p.githubUrl ? (
                         <a
                             className="text-primary underline"
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()} // 🔥 Link tıklanınca kart açılmasın
                         >
                             {t.github}
                         </a>
