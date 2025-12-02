@@ -28,8 +28,17 @@ export const handleCreateProject = async (req: Request, res: Response) => {
 // Tüm projeleri getir
 export const handleGetAllProjects = async (req: Request, res: Response) => {
     try {
+        const lang = req.query.lang === "en" ? "en" : "tr"; // default: tr
+
         const projects = await getAllProjects();
-        return res.status(200).json(projects);
+
+        const localized = projects.map(project => ({
+            ...project.toObject(),
+            title: project.title[lang],
+            description: project.description[lang],
+        }));
+
+        return res.status(200).json(localized);
     } catch (error) {
         console.error('Project fetch error', error);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -39,21 +48,26 @@ export const handleGetAllProjects = async (req: Request, res: Response) => {
 //Id ile proje getir
 export const handleGetOneProject = async (req: Request, res: Response) => {
     try {
+        const lang = req.query.lang === "en" ? "en" : "tr";
         const { id } = req.params;
 
         const project = await getOneProject(id);
-        if(!project) {
+        if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
 
-        await incrementProjectViews(id); //Sayacı artır
+        await incrementProjectViews(id);
 
-        return res.status(200).json(project);
+        return res.status(200).json({
+            ...project.toObject(),
+            title: project.title[lang],
+            description: project.description[lang],
+        });
     } catch (error) {
         console.error('Get one project error: ', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
-}
+};
 
 // Projeyi düzenle
 export const handleUpdateProject = async (req: Request, res: Response) => {

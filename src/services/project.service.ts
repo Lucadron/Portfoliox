@@ -9,7 +9,7 @@ export const createProject = async (input: CreateProjectInput) => {
 
 // Tüm projeleri getir
 export const getAllProjects = async () => {
-    return await Project.find().sort({ createdAt: -1 }) //en yeni ilk
+  return await Project.find().sort({ order: 1, createdAt: -1 });
 };
 
 //Id ile proje getir
@@ -19,8 +19,8 @@ export const getOneProject = async (id: string) => {
 
 // Proje güncelleme fonksiyonu, new: true → güncellenmiş halini döndürmesini sağlar
 export const updateProject = async (id: string, data: UpdateProjectInput) => {
-    const updated = await Project.findByIdAndUpdate(id, data, { new: true });
-    return updated;
+  const updated = await Project.findByIdAndUpdate(id, data, { new: true });
+  return updated;
 };
 
 // Proje silme
