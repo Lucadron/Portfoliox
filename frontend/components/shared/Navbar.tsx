@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useLang } from "@/context/LangContext";
 import { dict } from "@/lib/i18n";
 import { useEffect, useState } from "react";
+import TopSettingsBar from "@/components/shared/TopSettingsBar";
+import { Github, Linkedin } from "lucide-react";
 
 export default function Navbar() {
     const { lang } = useLang();
@@ -71,8 +73,28 @@ export default function Navbar() {
                     </a>
                 </div>
 
-                {/* Toggles */}
-                <div className="flex items-center gap-3 flex-shrink-0">
+                {/* Toggles + Social (desktop only) */}
+                <div className="hidden md:flex items-center gap-4">
+                    <a
+                        href="https://github.com/Lucadron"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-foreground/70 hover:text-accent transition"
+                        aria-label="GitHub"
+                    >
+                        <Github size={20} />
+                    </a>
+
+                    <a
+                        href="https://www.linkedin.com/in/emregulsen/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-foreground/70 hover:text-accent transition"
+                        aria-label="LinkedIn"
+                    >
+                        <Linkedin size={20} />
+                    </a>
+
                     <LangToggle />
                     <ThemeToggle />
                 </div>
