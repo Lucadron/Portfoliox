@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useLang } from "@/context/LangContext";
 import { dict } from "@/lib/i18n";
 import { useEffect, useState } from "react";
-import TopSettingsBar from "@/components/shared/TopSettingsBar";
 import { Github, Linkedin } from "lucide-react";
 
 export default function Navbar() {
@@ -14,7 +13,9 @@ export default function Navbar() {
     const t = dict[lang];
 
     const [active, setActive] = useState<string>("home");
+    const [shrink, setShrink] = useState(false); // scroll shrink
 
+    /* Active section detection */
     useEffect(() => {
         const sections = ["projects", "skills", "about", "contact"];
 
@@ -31,31 +32,77 @@ export default function Navbar() {
                     break;
                 }
             }
+
             setActive(current);
+            setShrink(window.scrollY > 40);
         };
 
         window.addEventListener("scroll", handler);
         return () => window.removeEventListener("scroll", handler);
     }, []);
 
+    /* Premium underline + active highlight */
     const linkClass = (id: string) =>
         `relative px-2 py-1 transition
-         after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-accent after:transition-all
+         after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-accent 
+         after:transition-all after:rounded-full
          hover:after:w-full
-         ${active === id ? "after:w-full font-semibold text-accent" : "text-foreground/80"}`;
+         ${active === id
+            ? "after:w-full font-semibold text-accent"
+            : "text-foreground/80"
+        }`;
 
     return (
-        <header className="sticky top-0 z-50 w-full backdrop-blur bg-background/70 border-b">
-            <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
-
+        <header
+            className={`
+                sticky top-0 z-50 w-full backdrop-blur bg-background/70 border-b
+                transition-all duration-300
+                ${shrink ? "py-1" : "py-3"}
+            `}
+        >
+            <nav
+                className={`
+                    mx-auto max-w-6xl px-4 
+                    flex items-center justify-between gap-4 flex-wrap
+                    transition-all duration-300
+                `}
+            >
                 {/* Brand */}
-                <Link href="#top" className="text-lg font-bold hover:opacity-80 transition">
-                    Emre Gulsen
-                </Link>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="#top"
+                        className={`
+                            font-bold hover:opacity-80 transition
+                            ${shrink ? "text-base" : "text-lg"}
+                        `}
+                    >
+                        Emre Gulsen
+                    </Link>
+
+                    {/* Social icons */}
+                    <div className="hidden sm:flex items-center gap-2">
+                        <a
+                            href="https://github.com/Lucadron"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-foreground/70 hover:text-accent transition"
+                        >
+                            <Github size={20} />
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/emregulsen/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-foreground/70 hover:text-accent transition"
+                        >
+                            <Linkedin size={20} />
+                        </a>
+                    </div>
+                </div>
 
                 {/* Menu */}
                 <div className="flex items-center gap-4 text-sm flex-wrap">
-
                     <a href="#projects" className={linkClass("projects")}>
                         {t.nav.projects}
                     </a>
@@ -73,32 +120,11 @@ export default function Navbar() {
                     </a>
                 </div>
 
-                {/* Toggles + Social (desktop only) */}
+                {/* Toggles (desktop only) */}
                 <div className="hidden md:flex items-center gap-4">
-                    <a
-                        href="https://github.com/Lucadron"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-foreground/70 hover:text-accent transition"
-                        aria-label="GitHub"
-                    >
-                        <Github size={20} />
-                    </a>
-
-                    <a
-                        href="https://www.linkedin.com/in/emregulsen/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-foreground/70 hover:text-accent transition"
-                        aria-label="LinkedIn"
-                    >
-                        <Linkedin size={20} />
-                    </a>
-
                     <LangToggle />
                     <ThemeToggle />
                 </div>
-
             </nav>
         </header>
     );
