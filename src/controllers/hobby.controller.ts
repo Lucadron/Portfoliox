@@ -3,13 +3,22 @@ import Hobby from '../models/hobby.model';
 import { createHobbySchema, updateHobbySchema } from '../validators/hobby.validator';
 
 // Tüm hobileri getir (sıralı)
-export const getAllHobbies = async (_req: Request, res: Response) => {
+export const getAllHobbies = async (req: Request, res: Response) => {
     try {
+        const lang = req.query.lang === "en" ? "en" : "tr";
+
         const hobbies = await Hobby.find().sort({ order: 1 });
-        return res.status(200).json(hobbies);
+
+        const localized = hobbies.map(h => ({
+            ...h.toObject(),
+            title: h.title[lang],
+            description: h.description[lang],
+        }));
+
+        return res.status(200).json(localized);
     } catch (error) {
-        console.error('Hobby fetch error:', error);
-        return res.status(500).json({ error: 'Sunucu hatası' });
+        console.error("Hobby fetch error:", error);
+        return res.status(500).json({ error: "Sunucu hatası" });
     }
 };
 
