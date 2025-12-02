@@ -78,6 +78,14 @@ export default function Navbar() {
                     >
                         Emre Gulsen
                     </Link>
+                    <a href="https://github.com/Lucadron" target="_blank" className="opacity-70">
+                        <Github size={18} />
+                    </a>
+
+                    <a href="https://linkedin.com/in/emregulsen" target="_blank" className="opacity-70">
+                        <Linkedin size={18} />
+                    </a>
+
 
                     {/* Social icons */}
                     <div className="hidden sm:flex items-center gap-2">
