@@ -18,14 +18,14 @@ export default function ProjectCard({ p }: { p: UiProject }) {
     const { lang } = useLang();
     const t = dict[lang].projects;
 
-    const [expanded, setExpanded] = useState(false); // 🔥 Mobil için toggle durumu
+    const [expanded, setExpanded] = useState(false);
 
     const imageSrc = p.image && p.image.trim() !== "" ? p.image : "/projects/project-default.jpg";
 
     return (
         <article
             className="card group overflow-hidden transition cursor-pointer"
-            onClick={() => setExpanded((prev) => !prev)} // 🔥 mobilde açıklamayı aç/kapat
+            onClick={() => setExpanded((prev) => !prev)}
         >
             {/* Kapak */}
             <div className="aspect-[16/9] bg-neutral overflow-hidden">
@@ -49,8 +49,8 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                         className={`
                             text-sm text-foreground/80 transition-all duration-300
                             line-clamp-2 
-                            group-hover:line-clamp-none        /* Desktop hover */
-                            ${expanded ? "line-clamp-none" : ""} /* 🔥 Mobile tıklayınca aç */
+                            group-hover:line-clamp-none
+                            ${expanded ? "line-clamp-none" : ""}
                         `}
                     >
                         {p.description}
@@ -74,7 +74,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                             href={p.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()} // 🔥 Link tıklanınca kart açılmasın
+                            onClick={(e) => e.stopPropagation()} // 
                         >
                             {t.live}
                         </a>
@@ -86,7 +86,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()} // 🔥 Link tıklanınca kart açılmasın
+                            onClick={(e) => e.stopPropagation()} // 
                         >
                             {t.github}
                         </a>
