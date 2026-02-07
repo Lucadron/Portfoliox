@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLang } from "@/context/LangContext";
 import { dict } from "@/lib/i18n";
+import { api } from "@/lib/api"; // API instance'ınızı buradan aldığınızı varsayıyorum
 
 export type UiProject = {
     id: string;
@@ -20,6 +21,21 @@ export default function ProjectCard({ p }: { p: UiProject }) {
 
     const [expanded, setExpanded] = useState(false);
 
+    // GitHub linkine tıklandığında sayaç artırma tetikleyicisi
+    const handleGithubClick = async (e: React.MouseEvent) => {
+        // Kartın açılmasını (expand) engellemek için
+        e.stopPropagation();
+
+        try {
+            // Belirttiğin üzere /api/projects/:id endpoint'i sayacı 1 artırıyor
+            // Kullanıcıyı bekletmemek için await'i burada tutuyoruz ama hata olsa da link açılmaya devam eder
+            await api.get(`/api/projects/${p.id}`);
+        } catch (err) {
+            // Sessizce konsola yazdırıyoruz, kullanıcı deneyimini bozmaya gerek yok
+            console.error("Sayaç artırma hatası:", err);
+        }
+    };
+
     const imageSrc = p.image && p.image.trim() !== "" ? p.image : "/projects/project-default.jpg";
 
     return (
@@ -27,7 +43,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
             className="card group overflow-hidden transition cursor-pointer"
             onClick={() => setExpanded((prev) => !prev)}
         >
-            {/* Kapak */}
+            {/* Kapak Görseli */}
             <div className="aspect-[16/9] bg-neutral overflow-hidden">
                 <img
                     src={imageSrc}
@@ -57,6 +73,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                     </p>
                 ) : null}
 
+                {/* Kullanılan Teknolojiler */}
                 {Array.isArray(p.tech) && p.tech.length > 0 ? (
                     <div className="flex flex-wrap gap-2">
                         {p.tech.map((tTech) => (
@@ -67,6 +84,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                     </div>
                 ) : null}
 
+                {/* Aksiyon Linkleri */}
                 <div className="mt-auto flex gap-4 pt-1">
                     {p.liveUrl ? (
                         <a
@@ -74,7 +92,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                             href={p.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()} // 
+                            onClick={(e) => e.stopPropagation()} 
                         >
                             {t.live}
                         </a>
@@ -86,7 +104,7 @@ export default function ProjectCard({ p }: { p: UiProject }) {
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()} // 
+                            onClick={handleGithubClick} // Güncellenen onClick fonksiyonu
                         >
                             {t.github}
                         </a>
